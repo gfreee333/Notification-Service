@@ -11,7 +11,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import ru.bank.notification_service.event.AuthEvent;
+import ru.bank.notification_service.model.event.AuthEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.consumer.group-id}")
     private String defualtGroupId;
 
-    @Bean
+
     public <T> ConsumerFactory<String, T> createConsumerFactory(
             Class<T> targetClass,
             Map<String, Object> extraProperty

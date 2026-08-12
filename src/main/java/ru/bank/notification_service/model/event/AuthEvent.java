@@ -1,10 +1,10 @@
-package ru.bank.notification_service.event;
+package ru.bank.notification_service.model.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.bank.notification_service.enums.AuthEventType;
+import ru.bank.notification_service.model.enums.AuthEventType;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
