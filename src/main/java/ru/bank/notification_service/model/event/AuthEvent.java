@@ -13,9 +13,10 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthEvent {
+public class AuthEvent implements IdentifiableEvent {
     private AuthEventType authEventType;
     private UUID userId;
+    private UUID eventId;
     private String firstName;
     private String lastName;
     private String email;

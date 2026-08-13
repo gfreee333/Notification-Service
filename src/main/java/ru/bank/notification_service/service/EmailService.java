@@ -1,15 +1,17 @@
 package ru.bank.notification_service.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") // <- Добавил, чтобы mailSender не мозолил глаза
 @Slf4j
 public class EmailService {
 
@@ -18,16 +20,18 @@ public class EmailService {
     @Value("${notification.email.from}")
     private String fromEmail;
 
-    public void sendSimpleMessage(String to, String subject, String text){
+    public void sendHtmlMessage(String to, String subject, String htmlBody) {
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(fromEmail);
-            message.setTo(to); // На какую почту мы делаем отправку
-            message.setSubject(subject); // Тема сообщения
-            message.setText(text); // Конкретное сообщение для пользователя
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlBody, true);
             mailSender.send(message);
-        } catch (Exception ex){ // Можно сделать конкретное сообщение об ошибке, если нужно
-            throw new RuntimeException("Email sending exception");
+
+        } catch (MessagingException ex) {
+            throw new RuntimeException("Ошибка отправки сообщения на Email" + ex.getMessage());
         }
     }
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Аккаунт заблокирован</title>
+    <style th:insert="~{style-css/email-style.css}"></style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Аккаунт заблокирован</h1>
+    </div>
+
+    <div class="content">
+        <h2>Здравствуйте, <span th:text="${firstName + ' ' + lastName}">Иван Иванов</span>!</h2>
+
+        <p>Ваш аккаунт в системе <strong>Bank Service</strong> был заблокирован по соображениям безопасности.</p>
+
+        <div style="background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 12px 20px; margin: 20px 0; border-radius: 4px;">
+            <p style="margin: 0; color: #991b1b;">
+                <strong> Дата блокировки:</strong>
+                <span th:text="${#temporals.format(timestamp, 'dd.MM.yyyy HH:mm:ss')}">12.08.2026 15:30:00</span>
+            </p>
+        </div>
+
+        <p><strong>Для разблокировки аккаунта необходимо:</strong></p>
+        <ul style="color: #444; line-height: 1.8; padding-left: 20px;">
+            <li>Обратиться в службу поддержки</li>
+            <li>Подтвердить личность</li>
+        </ul>
+
+        <p style="margin-top: 25px; text-align: center">
+            <a href="#" class="button">Связаться с поддержкой</a>
+        </p>
+
+        <p style="margin-top: 15px; font-size: 14px; color: #6b7280; text-align: center">
+            Если вы не совершали действий, которые могли привести к блокировке, свяжитесь с нами.
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>© 2026 Bank Service. Все права могли бы быть защищены.</p>
+        <p>Это автоматическое сообщение, пожалуйста, не отвечайте на него.</p>
+    </div>
+</div>
+</body>
+</html>
