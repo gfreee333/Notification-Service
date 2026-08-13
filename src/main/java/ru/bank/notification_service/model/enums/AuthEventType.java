@@ -1,4 +1,4 @@
-package ru.bank.notification_service.enums;
+package ru.bank.notification_service.model.enums;
 
 public enum AuthEventType {
     PASSWORD_EVENT,
