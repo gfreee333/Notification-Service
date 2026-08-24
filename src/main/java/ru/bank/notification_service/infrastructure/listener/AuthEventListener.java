@@ -54,7 +54,7 @@ public class AuthEventListener {
     )
     public void handlerBlockedEvent(AuthEvent event, Acknowledgment ack) {
         process(event, ack, e -> {
-            String body = emailTemplateService.renderBlockedTemplate(
+            String body = emailTemplateService.renderAuthBlockedTemplate(
                     e.getFirstName(), e.getLastName(), e.getTimestamp()
             );
             emailService.sendHtmlMessage(e.getEmail(), "Информация о блокировке аккаунта", body);
@@ -67,7 +67,7 @@ public class AuthEventListener {
     )
     public void handlerUnblockedEvent(AuthEvent event, Acknowledgment ack) {
         process(event, ack, e -> {
-            String body = emailTemplateService.rendersUnblockedTemplate(
+            String body = emailTemplateService.rendersAuthUnblockedTemplate(
                     e.getFirstName(), e.getLastName(), e.getTimestamp()
             );
             emailService.sendHtmlMessage(e.getEmail(), "Информация о разблокировке аккаунта", body);
