@@ -29,8 +29,9 @@ public class AccountEventListener {
         process(event, ack, e -> {
             String body = emailTemplateService.renderAccountTemplate(
                     "/account-events/account-registration",
-                    event.getAccountNumber());
-            emailService.sendHtmlMessage(e.getEmail(), "Открытие нового счета", body);
+                    event.getAccountNumber(),
+                    event.getTimestamp());
+            emailService.sendHtmlMessage(e.getEmail(), "Информация об открытие нового счета", body);
         });
     }
 
@@ -42,7 +43,8 @@ public class AccountEventListener {
         process(event, ack, e -> {
             String body = emailTemplateService.renderAccountTemplate(
                     "/account-events/account-blocked",
-                    event.getAccountNumber());
+                    event.getAccountNumber(),
+                    event.getTimestamp());
             emailService.sendHtmlMessage(e.getEmail(), "Информация о блокировки счета", body);
         });
     }
@@ -55,7 +57,8 @@ public class AccountEventListener {
         process(event, ack, e -> {
             String body = emailTemplateService.renderAccountTemplate(
                     "/account-events/account-unblocked",
-                    event.getAccountNumber());
+                    event.getAccountNumber(),
+                    event.getTimestamp());
             emailService.sendHtmlMessage(e.getEmail(), "Информация о разблокировки счета", body);
         });
     }
@@ -68,7 +71,8 @@ public class AccountEventListener {
         process(event, ack, e -> {
             String body = emailTemplateService.renderAccountTemplate(
                     "/account-events/account-closed",
-                    event.getAccountNumber());
+                    event.getAccountNumber(),
+                    event.getTimestamp());
             emailService.sendHtmlMessage(e.getEmail(), "Информация о закрытие счета", body);
         });
     }

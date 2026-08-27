@@ -16,9 +16,9 @@ public class EmailTemplateService {
 
     private final SpringTemplateEngine templateEngine;
 
-    public String renderAccountTemplate(String template,
-                                        String accountNumber){
-        return render(template, Map.of("accountNumber", accountNumber));
+    public String renderAccountTemplate(String template, String accountNumber, LocalDateTime timestamp){
+        return render(template, Map.of("accountNumber", accountNumber,
+                                       "timestamp", timestamp));
     }
 
     public String renderPasswordTemplate(String firstName, String lastName, String password) {
