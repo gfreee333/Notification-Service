@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Счет разблокирован</title>
+    <style th:insert="~{style-css/email-style.css}"></style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Разблокировка счета</h1>
+    </div>
+    <div class="content">
+        <h2>Здравствуйте уважаемый пользователь!</h2>
+        <p>
+            Ваш счет <strong>№ <span th:text="${accountNumber}">1234567890</span></strong>
+            в системе <strong>Bank Service</strong> был разблокирован.
+        </p>
+        <div style="background-color: #f0fdf4; border-left: 4px solid #16a34a; padding: 12px 20px; margin: 20px 0; border-radius: 4px;">
+            <p style="margin: 0; color: #166534;">
+                <strong>Дата разблокировки:</strong>
+                <span th:text="${#temporals.format(timestamp, 'dd.MM.yyyy HH:mm:ss')}">24.08.2026 12:45:00</span>
+            </p>
+        </div>
+        <p><strong>Восстановлены следующие возможности:</strong></p>
+        <ul style="color: #444; line-height: 1.8; padding-left: 20px;">
+            <li>Пополнение счета</li>
+            <li>Переводы между счетами</li>
+            <li>Просмотр истории операций</li>
+            <li>Управление картами</li>
+        </ul>
+        <p style="margin-top: 25px; text-align: center">
+            <a href="#" class="button">Перейти в личный кабинет</a>
+        </p>
+        <p style="margin-top: 15px; font-size: 14px; color: #6b7280; text-align: center">
+            Если у вас возникли вопросы, свяжитесь с нашей службой поддержки.
+        </p>
+    </div>
+    <div class="footer">
+        <p>© 2026 Bank Service. Все права могли бы быть защищены.</p>
+        <p>Это автоматическое сообщение, пожалуйста, не отвечайте на него.</p>
+    </div>
+</div>
+</body>
+</html>

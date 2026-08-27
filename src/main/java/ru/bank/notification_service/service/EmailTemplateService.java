@@ -16,6 +16,11 @@ public class EmailTemplateService {
 
     private final SpringTemplateEngine templateEngine;
 
+    public String renderAccountTemplate(String template, String accountNumber, LocalDateTime timestamp){
+        return render(template, Map.of("accountNumber", accountNumber,
+                                       "timestamp", timestamp));
+    }
+
     public String renderPasswordTemplate(String firstName, String lastName, String password) {
         return render("/auth-events/password-event",
                 Map.of( "firstName", firstName,
@@ -30,14 +35,14 @@ public class EmailTemplateService {
                         "timestamp", timestamp));
     }
 
-    public String renderBlockedTemplate(String firstName, String lastName, LocalDateTime timestamp) {
+    public String renderAuthBlockedTemplate(String firstName, String lastName, LocalDateTime timestamp) {
         return render("/auth-events/blocked-event",
                 Map.of( "firstName", firstName,
                         "lastName", lastName,
                         "timestamp", timestamp));
     }
 
-    public String rendersUnblockedTemplate(String firstName, String lastName, LocalDateTime timestamp) {
+    public String rendersAuthUnblockedTemplate(String firstName, String lastName, LocalDateTime timestamp) {
         return render("/auth-events/unblocked-event",
                 Map.of( "firstName", firstName,
                         "lastName", lastName,

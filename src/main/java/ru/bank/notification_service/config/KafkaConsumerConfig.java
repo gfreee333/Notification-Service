@@ -15,6 +15,7 @@ import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
 import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.util.backoff.FixedBackOff;
+import ru.bank.notification_service.model.event.AccountEvent;
 import ru.bank.notification_service.model.event.AuthEvent;
 
 import java.util.HashMap;
@@ -71,6 +72,7 @@ public class KafkaConsumerConfig {
     }
 
 
+
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, AuthEvent> authEventKafkaListenerContainerFactory(
             KafkaTemplate<String, Object> kafkaTemplate
@@ -89,6 +91,43 @@ public class KafkaConsumerConfig {
         factory.setCommonErrorHandler(errorHandler);
         return factory;
     }
+
+
+
+
+    @Bean
+    public ConsumerFactory<String, AccountEvent> accountEventConsumerFactory(){
+        return createConsumerFactory(
+                AccountEvent.class,
+                Map.of(
+                        ConsumerConfig.MAX_POLL_RECORDS_CONFIG,10,
+                        ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 45000,
+                        ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, 3000,
+                        ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 300000
+                )
+        );
+    }
+
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, AccountEvent> accountEventKafkaListenerContainerFactory(
+            KafkaTemplate<String, Object> kafkaTemplate
+    ){
+        ConcurrentKafkaListenerContainerFactory<String, AccountEvent> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(accountEventConsumerFactory());
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
+        factory.setConcurrency(3);
+        DeadLetterPublishingRecoverer recover = new DeadLetterPublishingRecoverer(kafkaTemplate);
+        DefaultErrorHandler errorHandler = new DefaultErrorHandler(
+                recover,
+                new FixedBackOff(2000L, 3L)
+        );
+        errorHandler.addNotRetryableExceptions(IllegalArgumentException.class);
+        factory.setCommonErrorHandler(errorHandler);
+        return factory;
+    }
+
 
 
 
